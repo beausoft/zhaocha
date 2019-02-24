@@ -1,0 +1,158 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.hjp</groupId>
+  <artifactId>zhaocha</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>zhaocha</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+		<groupId>net.java.dev.jna</groupId>
+		<artifactId>jna</artifactId>
+		<version>4.1.0</version>
+	</dependency>
+    
+  </dependencies>
+  
+  <build>
+  	<plugins>
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>  
+		    <artifactId>maven-jar-plugin</artifactId>  
+		    <version>2.4</version>  
+		    <configuration>  
+		        <archive>  
+		            <manifest>  
+		                <addClasspath>true</addClasspath>  
+		                <classpathPrefix>lib/</classpathPrefix>  
+		                <mainClass>com.hjp.zhaocha.App</mainClass>  
+		            </manifest>  
+		        </archive>  
+		    </configuration>
+  		</plugin>
+  		
+  		<!-- 设置源文件编码方式 -->  
+            <plugin>  
+                <groupId>org.apache.maven.plugins</groupId>  
+                <artifactId>maven-compiler-plugin</artifactId>  
+                <configuration>  
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>  
+                    <source>1.7</source>  
+                    <target>1.7</target>  
+                    <encoding>UTF-8</encoding>  
+                </configuration>  
+            </plugin>  
+            <!-- 打包jar文件时，配置manifest文件，加入lib包的jar依赖 -->  
+            <plugin>  
+                <groupId>org.apache.maven.plugins</groupId>  
+                <artifactId>maven-jar-plugin</artifactId>  
+                <configuration>  
+                    <archive>  
+                        <manifest>  
+                            <addClasspath>true</addClasspath>  
+                            <classpathPrefix>lib/</classpathPrefix>  
+                            <mainClass>.....MonitorMain</mainClass>  
+                        </manifest>  
+                    </archive>  
+                </configuration>  
+            </plugin>  
+            <!-- 拷贝依赖的jar包到lib目录 -->  
+            <plugin>  
+                <groupId>org.apache.maven.plugins</groupId>  
+                <artifactId>maven-dependency-plugin</artifactId>  
+                <executions>  
+                    <execution>  
+                        <id>copy</id>  
+                        <phase>package</phase>  
+                        <goals>  
+                            <goal>copy-dependencies</goal>  
+                        </goals>  
+                        <configuration>  
+                            <outputDirectory>  
+                                ${project.build.directory}/lib
+                            </outputDirectory>  
+                        </configuration>  
+                    </execution>  
+                </executions>  
+            </plugin>  
+            <!-- 解决资源文件的编码问题 -->  
+            <plugin>  
+                <groupId>org.apache.maven.plugins</groupId>  
+                <artifactId>maven-resources-plugin</artifactId>  
+                <version>2.3</version>  
+                <configuration>  
+                    <encoding>UTF-8</encoding>  
+                </configuration>  
+            </plugin>
+            <!-- 打包source文件为jar文件 -->  
+            <plugin>  
+                <artifactId>maven-source-plugin</artifactId>  
+                <version>2.1</version>  
+                <configuration>  
+                    <attach>true</attach>  
+                    <encoding>UTF-8</encoding>  
+                </configuration>  
+                <executions>  
+                    <execution>  
+                        <phase>compile</phase>  
+                        <goals>  
+                            <goal>jar</goal>  
+                        </goals>  
+                    </execution>  
+                </executions>  
+            </plugin>
+  	</plugins>
+  	<pluginManagement>
+  		<plugins>
+  			<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+  			<plugin>
+  				<groupId>org.eclipse.m2e</groupId>
+  				<artifactId>lifecycle-mapping</artifactId>
+  				<version>1.0.0</version>
+  				<configuration>
+  					<lifecycleMappingMetadata>
+  						<pluginExecutions>
+  							<pluginExecution>
+  								<pluginExecutionFilter>
+  									<groupId>
+  										org.apache.maven.plugins
+  									</groupId>
+  									<artifactId>
+  										maven-resources-plugin
+  									</artifactId>
+  									<versionRange>
+  										[2.3,)
+  									</versionRange>
+  									<goals>
+  										<goal>resources</goal>
+  									</goals>
+  								</pluginExecutionFilter>
+  								<action>
+  									<ignore></ignore>
+  								</action>
+  							</pluginExecution>
+  						</pluginExecutions>
+  					</lifecycleMappingMetadata>
+  				</configuration>
+  			</plugin>
+  		</plugins>
+  	</pluginManagement>
+  </build>
+  
+</project>
